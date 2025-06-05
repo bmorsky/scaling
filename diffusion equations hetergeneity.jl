@@ -1,6 +1,6 @@
 using DifferentialEquations, Plots, LaTeXStrings
 
-Θ = 0.8
+Θ = 0.6
 L = 350
 T = 200
 N = 1
@@ -20,6 +20,10 @@ function calc_utility(pop,alpha)
     return alpha*log(1.0 + γ₁*(max(pop,0)^(1-β₁))/(Y₁*N^β₁)) + (1-alpha)*log(1.0 + γ₂*(max(pop,0)^(1-β₂))/(Y₂*N^β₂))
 end
 
+function selection_gradient(pop)
+    return log(1.0 + γ₁*(max(pop,0)^(1-β₁))/(Y₁*N^β₁)) - log(1.0 + γ₂*(max(pop,0)^(1-β₂))/(Y₂*N^β₂))
+end
+
 function replicator!(du,u,p,t)
     α₁, α₂ = p
     du[1] = u[1]*(1-u[1])*(calc_utility(u[1], α₁) - calc_utility(1-u[1], α₂))
@@ -32,12 +36,13 @@ traits = range(0.0, 1.0, length=L)
 
 # Define invasion fitness
 function s(r, r1, r2, u0)
-    m = r + 1e-4
+    # m = r + 1e-4
     prob = ODEProblem(replicator!,u0,tspan,(r1,r2))
     sol = solve(prob)
     resident = calc_utility(sol[end][1],r)
-    mutant = calc_utility(sol[end][1],m)
-    growth_rate = mutant - resident
+    # mutant = calc_utility(sol[end][1],m)
+    # growth_rate = mutant - resident
+    growth_rate = selection_gradient(sol[end][1])
     if growth_rate > 0
         return 1
     elseif growth_rate < 0
