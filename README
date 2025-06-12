@@ -1,0 +1,19 @@
+Here is provided code and software details, which includes pseudocode. Julia can be installed using the installation guide at https://julialang.org/install/.
+
+Julia version: v1.11.5
+
+Packages used: DifferentialEquations.jl, Ipopt.jl, JuMP.jl, LaTeXStrings.jl, LinearAlgebra.jl, Plots.jl
+
+Results typically are generated on a "normal" desktop computer within a day.
+
+bifurcation_diagram.jl
+This code houses functions to calculate utility and replicator dynamics under proportional allocation of resources. It loops through different parameter values α to find stable and unstable equilibria. It then plots these in a figure.
+
+diffusion equations.jl
+This code houses functions to calculate utility and replicator dynamics under proportional allocation of resources. It numerically solves the replicator equations, calculates a variety of measures of social welfare, and plots these results in a heatmap and time series.
+
+diffusion equations Nash.jl
+This code is similar to diffusion equations.jl. Except, allocations are determined by optimizing the Nash social welfare, which is calculated using the JuMP.jp and Ipopt.jl packages.
+
+diffusion equations heterogeneity.jl
+This code houses a functions that calculate utility and the selection gradient (invasion fitness). It calculates the selection gradient for varying initial conditions and plots a heatmap of invasibility.
