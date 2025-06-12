@@ -4,7 +4,7 @@ Julia version: v1.11.5
 
 Packages used: DifferentialEquations.jl, Ipopt.jl, JuMP.jl, LaTeXStrings.jl, LinearAlgebra.jl, Plots.jl
 
-Results typically are generated on a "normal" desktop computer within a day.
+Results typically are generated on a "normal" desktop computer within a day. To run demos in shorter periods of time, please reduce the number of cities (set L less than 10).
 
 bifurcation_diagram.jl
 This code houses functions to calculate utility and replicator dynamics under proportional allocation of resources. It loops through different parameter values α to find stable and unstable equilibria. It then plots these in a figure.
