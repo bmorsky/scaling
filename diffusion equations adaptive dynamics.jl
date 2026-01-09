@@ -1,10 +1,10 @@
 using DifferentialEquations, Plots, LaTeXStrings
 
-Θ = 0.6
+Θ = 0.8#0.6155722065
 L = 350
 T = 200
 N = 1
-β₁ = 1.2
+β₁ = 1.4
 β₂ = 0.7
 Y₁ = 1
 Y₂ = 1
@@ -40,6 +40,7 @@ function s(r, r1, r2, u0)
     prob = ODEProblem(replicator!,u0,tspan,(r1,r2))
     sol = solve(prob)
     resident = calc_utility(sol[end][1],r)
+    # println(sol[end][1])
     # mutant = calc_utility(sol[end][1],m)
     # growth_rate = mutant - resident
     growth_rate = selection_gradient(sol[end][1])
@@ -53,8 +54,8 @@ function s(r, r1, r2, u0)
 end
 
 # Create matrix of invasion fitness values
-Z1 = [s(r1, r1, r2, [0.5]) for r1 in traits, r2 in traits]
-Z2 = [s(r2, r2, r1, [0.5]) for r1 in traits, r2 in traits]
+Z1 = [s(r1, r1, r2, [0.2]) for r1 in traits, r2 in traits]
+Z2 = [s(r2, r2, r1, [0.8]) for r1 in traits, r2 in traits]
 
 Z = zeros(L,L)
 for i=1:L
@@ -74,7 +75,7 @@ end
 pyplot()
 
 # Plot PIP
-heatmap(traits, traits, Z,
+heatmap(traits, traits, transpose(Z),
     xlabel=L"\alpha_1",
     ylabel=L"\alpha_2",
     color=[RGB(1,113/255,206/255),RGB(1/255,205/255,254/255),RGB(5/255,1,161/255),RGB(185/255,103/255,1)],

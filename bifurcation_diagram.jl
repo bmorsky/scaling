@@ -1,6 +1,6 @@
 using DifferentialEquations, Plots, LaTeXStrings
 
-a = 0.7
+a = 0.2
 T = 800
 N = 1
 β₁ = 1.4
